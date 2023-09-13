@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Waterguns:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Waterguns_jar</output-path>
+    <root id="archive" name="Waterguns.jar">
+      <element id="module-output" name="Waterguns" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/me/zephi/Grass/1.0.2-RELEASE/Grass-1.0.2-RELEASE.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
