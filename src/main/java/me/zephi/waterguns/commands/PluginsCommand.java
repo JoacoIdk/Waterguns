@@ -31,6 +31,6 @@ public class PluginsCommand extends BasicCommand {
 
         BukkitUtil.sendCenteredMessage(sender, CC.GRAY + CC.LINE);
 
-        return CommandReturn.USAGE;
+        return CommandReturn.DEFAULT;
     }
 }
