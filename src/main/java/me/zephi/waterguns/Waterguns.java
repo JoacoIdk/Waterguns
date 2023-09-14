@@ -1,7 +1,7 @@
 package me.zephi.waterguns;
 
 import lombok.Getter;
-import me.zephi.waterguns.commands.PluginsCommand;
+import me.zephi.waterguns.commands.WatergunsCommand;
 import me.zephi.waterguns.listener.SleepListener;
 import me.zephi.waterguns.listener.TreeBreakListener;
 import me.zephi.waterguns.register.RegisterHandler;
@@ -16,7 +16,7 @@ public final class Waterguns extends JavaPlugin {
     public void onEnable() {
         handler = new RegisterHandler(this);
 
-        handler.registerCommand(new PluginsCommand());
+        handler.registerCommand(new WatergunsCommand());
         handler.registerListener(new SleepListener());
         handler.registerListener(new TreeBreakListener());
         handler.registerTask(new AutosaveTask());
