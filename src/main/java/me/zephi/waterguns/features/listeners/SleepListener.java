@@ -1,4 +1,4 @@
-package me.zephi.waterguns.listener;
+package me.zephi.waterguns.features.listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

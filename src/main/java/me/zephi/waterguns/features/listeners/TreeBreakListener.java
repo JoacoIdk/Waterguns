@@ -1,4 +1,4 @@
-package me.zephi.waterguns.listener;
+package me.zephi.waterguns.features.listeners;
 
 import me.zephi.waterguns.util.BukkitUtil;
 import org.bukkit.block.Block;

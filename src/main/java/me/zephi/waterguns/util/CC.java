@@ -27,6 +27,7 @@ public class CC {
     public static final String ITALIC = ChatColor.ITALIC.toString();
     public static final String RESET = ChatColor.RESET.toString();
 
+    public final static String EMPTY = BLACK + GRAY + BLUE + GREEN;
     public final static String LINE = "&m--------------------";
 
     public static String translate(String message, Object... format) {

@@ -1,6 +1,9 @@
 package me.zephi.waterguns.register;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import lombok.Getter;
+import me.zephi.waterguns.register.command.BasicCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -14,10 +17,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 // Simple class to register commands & listeners
 public class RegisterHandler {
+    @Getter
     private final Plugin plugin;
+    private final Map<Class<? extends Handler>, Handler> handlers = Maps.newConcurrentMap();
     private final List<Command> commands = Lists.newArrayList();
     private final List<Listener> listeners = Lists.newArrayList();
     private final List<RunTask> tasks = Lists.newArrayList();
@@ -28,6 +34,9 @@ public class RegisterHandler {
 
     // Slooooooow
     public void registerAll(Object object) {
+        if (object instanceof Handler)
+            registerHandler((Handler) object);
+
         if (object instanceof Command)
             registerCommand((Command) object);
 
@@ -36,6 +45,12 @@ public class RegisterHandler {
 
         if (object instanceof RunTask)
             registerTask((RunTask) object);
+    }
+
+    public void registerHandler(Handler handler) {
+        handlers.put(handler.getClass(), handler);
+
+        handler.onRegister(this);
     }
 
     public void registerCommand(Command command) {
@@ -50,8 +65,22 @@ public class RegisterHandler {
         tasks.add(task);
     }
 
+    public<T extends Handler> T getHandler(Class<T> type) {
+        Object handler = handlers.get(type);
+
+        if (handler == null)
+            return null;
+
+        return type.cast(handler);
+    }
+
     public void activate() {
         try {
+            // Activate handlers
+
+            for (Handler handler : handlers.values())
+                handler.onActivate();
+
             // Register commands
 
             PluginManager pluginManager = Bukkit.getPluginManager();
@@ -69,6 +98,9 @@ public class RegisterHandler {
                     check.unregister(commandMap);
 
                 commandMap.register(plugin.getName(), command);
+
+                if (command instanceof BasicCommand)
+                    ((BasicCommand) command).setHandler(this);
             }
 
             // Make commands tab-completable
@@ -99,5 +131,13 @@ public class RegisterHandler {
         } catch (NoSuchFieldException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void deactivate() {
+
+        // Deactivate handlers
+
+        for (Handler handler : handlers.values())
+            handler.onDeactivate();
     }
 }

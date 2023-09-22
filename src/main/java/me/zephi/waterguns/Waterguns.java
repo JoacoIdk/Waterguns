@@ -1,11 +1,13 @@
 package me.zephi.waterguns;
 
 import lombok.Getter;
-import me.zephi.waterguns.commands.WatergunsCommand;
-import me.zephi.waterguns.listener.SleepListener;
-import me.zephi.waterguns.listener.TreeBreakListener;
+import me.zephi.waterguns.features.commands.ListCommand;
+import me.zephi.waterguns.features.commands.WatergunsCommand;
+import me.zephi.waterguns.features.listeners.SleepListener;
+import me.zephi.waterguns.features.listeners.TreeBreakListener;
+import me.zephi.waterguns.features.mod.ModHandler;
 import me.zephi.waterguns.register.RegisterHandler;
-import me.zephi.waterguns.tasks.AutosaveTask;
+import me.zephi.waterguns.features.tasks.AutosaveTask;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter
@@ -16,6 +18,8 @@ public final class Waterguns extends JavaPlugin {
     public void onEnable() {
         handler = new RegisterHandler(this);
 
+        handler.registerHandler(new ModHandler());
+        handler.registerCommand(new ListCommand());
         handler.registerCommand(new WatergunsCommand());
         handler.registerListener(new SleepListener());
         handler.registerListener(new TreeBreakListener());

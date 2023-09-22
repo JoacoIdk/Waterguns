@@ -1,14 +1,18 @@
 package me.zephi.waterguns.register.command;
 
 import com.google.common.collect.Lists;
+import me.zephi.waterguns.register.Handler;
+import me.zephi.waterguns.register.RegisterHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class BasicCommand extends Command {
+    private RegisterHandler handler;
     private final List<Command> commands = Lists.newArrayList();
 
     public BasicCommand(String name) {
@@ -31,6 +35,22 @@ public abstract class BasicCommand extends Command {
         super(name, description, usageMessage, aliases);
 
         setPermission(permission);
+    }
+
+    public void setHandler(RegisterHandler handler) {
+        this.handler = handler;
+    }
+
+    public Plugin plugin() {
+        return handler.getPlugin();
+    }
+
+    public<T> T plugin(Class<T> type) {
+        return type.cast(plugin());
+    }
+
+    public<T extends Handler> T handler(Class<T> type) {
+        return handler.getHandler(type);
     }
 
     protected void registerCommand(Command command) {

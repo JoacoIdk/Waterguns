@@ -1,6 +1,7 @@
-package me.zephi.waterguns.tasks;
+package me.zephi.waterguns.features.tasks;
 
 import me.zephi.waterguns.register.RunTask;
+import me.zephi.waterguns.util.CC;
 import org.bukkit.Bukkit;
 
 public class AutosaveTask implements RunTask {
@@ -16,6 +17,7 @@ public class AutosaveTask implements RunTask {
 
     @Override
     public void task() {
+        Bukkit.broadcastMessage(CC.ORANGE + "Saved all player data.");
         Bukkit.savePlayers();
     }
 }
